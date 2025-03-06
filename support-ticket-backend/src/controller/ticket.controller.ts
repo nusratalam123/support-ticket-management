@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 
 import Ticket from "../model/ticket.model";
+import ReplyMsg from "../model/replyMsg.model";
 
 // Get all Ticket posts and count the status of each
 export const getAllTicketPosts = async (
@@ -202,6 +203,34 @@ export const deleteTicketPost = async (
 
     res.status(200).json({
       message: "Ticket post Deleted Successfully",
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+//reply to the msg
+export const replyTicketPost = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const ticketId = req.params.id;
+    const post = await Ticket.findById(ticketId);
+
+    if (!post) {
+      res.status(400).json({
+        message: "ticket not found",
+      });
+    }
+
+    console.log(req.body);
+    const replyMsg = await ReplyMsg.create(req.body);
+
+    res.status(200).json({
+      message: "reply Ticket msg successfully",
+      data: replyMsg,
     });
   } catch (err) {
     next(err);

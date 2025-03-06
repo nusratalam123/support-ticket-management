@@ -7,7 +7,8 @@ import {
   getSingleTicketPost,
   updateTicketPost,
   getAllTicketPostSearchByArea,
-  getAllTicketPostSearchByModel
+  getAllTicketPostSearchByModel,
+  replyTicketPost
 } from "../controller/ticket.controller";
 
 const router = Router();
@@ -28,6 +29,9 @@ router.get("/allGroupTicketPosts/:model", getAllTicketPostSearchByModel);
 
 // create new Ticket Post
 router.post("/create", createTicketPost);
+
+// add reply to the msg
+router.post("/reply-msg/:id", replyTicketPost);
 
 // update Ticket post
 router.put("/update-post/:id", updateTicketPost);
